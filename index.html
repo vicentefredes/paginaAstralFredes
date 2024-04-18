@@ -1,0 +1,260 @@
+<!DOCTYPE HTML>
+<!--
+	Astral by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Astral versión Vicente Fredes Estuardo</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
+
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper-->
+			<div id="wrapper">
+
+				<!-- Nav -->
+					<nav id="nav">
+						<a href="#" class="icon solid fa-home"><span>Inicio</span></a>
+						<a href="#calculadora" class="icon solid fa-calculator"><span>Calculadora</span></a>
+						<a href="#contact" class="icon solid fa-envelope"><span>Contacto</span></a>
+						<a href="https://twitter.com/numetal_moment" class="icon brands fa-twitter"><span>Twitter</span></a>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Me -->
+							<article id="home" class="panel intro">
+								<header>
+									<h1>Página 'Astral'</h1>
+									<p>Vicente Fredes Estuardo</p>
+
+								</header>
+								<a href="#calculadora" class="jumplink pic">
+									<span class="arrow icon solid fa-chevron-right"><span>Ir a calculadora</span></span>
+									<img src="images/andromeda.webp" alt="" />
+								</a>
+							</article>
+
+						<!-- Calculadora -->
+							<article id="calculadora" class="panel">
+								<header>
+									<h2>Calculadora</h2>
+								</header>
+								<p>
+									Ingrese dos números y una operación a realizar en sus respectivos campos. A continuación, haga click en 'Calcular' y verá el resultado en pantalla
+								</p>
+								<section id="seccionCalculadora">
+									<form action="#" method="post" id="formCalculadora">
+										<div class="form-row justify-content-center">
+											<div class="form-group col-md-2 col-sm-6 mx-1">
+											  <!--<label for="inputNo1">1er Número</label>-->
+											  <br>
+											  <input type="number" class="form-control" id="inputNo1">
+											</div>	
+										    <div class="form-group col-md-2 col-sm-6 mx-1">
+												<!--<label for="exampleFormControlSelect1">Op.</label>-->
+												<br>
+												<select class="form-control" id="seleccionOperacion">
+													<option selected value="0">...</option>
+													<option value="1">+</option>
+													<option value="2">-</option>
+													<option value="3">x</option>
+													<option value="4">÷</option>
+													<option value="5">^</option>
+													<option value="6">√</option>
+													<option value="7">mod</option>
+												</select>
+											  </div>
+											<div class="form-group col-md-2 col-sm-6 mx-1">
+												<!--<label for="inputNo2">2do Número</label>-->
+												<br>
+												<input type="number" class="form-control" id="inputNo2">
+											</div>
+											<div class="form-group col-md-2 col-sm-6 mx-3 mt-3">
+												<button type="button" class="btn btn-secondary" id="btnCalcular" onclick="calcular();">Calcular</button>
+											</div> 
+											<div class="form-group col-md-2 col-sm-6 mx-3 mt-3">
+												<button type="button" class="btn btn-secondary" id="btnLimpiar" onclick="document.getElementById('formCalculadora').reset();">Limpiar</button>
+											</div> 
+										</div>
+										</form>
+										<div class="form-row justify-content-center" style="margin-top: 5%;">
+											<div class="col-md-6">
+												<h3 style="text-align: center;">Resultado:</h3>
+											</div>
+										  </div>									
+								</section>
+							</article>
+
+						<!-- Contact -->
+							<article id="contact" class="panel">
+								<header>
+									<h2>Formulario de Contacto:</h2>
+								</header>
+								<form action="#" method="post">
+									<div class="form-row">
+										<div class="form-group col-md-6">
+										  <label for="inputNombre">Nombre</label>
+										  <input type="text" class="form-control" id="inputNombre" placeholder="Nombre">
+										</div>
+										<div class="form-group col-md-6">
+											<label for="inputApellido">Apellido</label>
+											<input type="text" class="form-control" id="inputApellido" placeholder="Apellido">
+										</div>
+									</div>
+									<div class="form-row">
+										<div class="form-group col-md-6">
+											<label for="inputEmail">Correo Electrónico</label>
+											<input type="email" class="form-control" id="inputEmail" placeholder="usuario123@mail.com">
+										  </div>
+										<div class="form-group col-md-6">
+											<label for="inputTelefono">Teléfono Celular</label>
+											<input type="number" class="form-control" id="inputTelefono" placeholder="9XXXXXXXX">
+										</div>
+									</div>
+									<div class="form-row">
+										<div class="form-group col-md-12">
+										  <label for="exampleFormControlTextarea1">Mensaje</label>
+										<textarea class="form-control" id="exampleFormControlTextarea1" rows="6"></textarea>
+										</div>
+									</div>
+									<div class="form-row">
+									  <div class="form-group col-md-12" style="text-align: center; vertical-align: middle;">
+										  <button type="submit" class="btn btn-secondary" id="btnEnviar">Enviar</button>
+									  </div>  
+									</div>
+								</form> 
+							</article>
+
+					</div>
+
+				<!-- Footer -->
+					<div id="footer">
+						<ul class="copyright">
+							<li>&copy; Vicente Fredes Estuardo - Analista Programador Computacional DUOC UC 2024</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+						</ul>
+					</div>
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+			<script>
+				//Variable para que la fila(row) correspondiente al resultado solamente se agregue la primera vez que se haga click en 'Calcular'
+				var filaResultadoAgregada = false;
+
+				//Función para agregar fila (row) en donde se mostrará el resultado del cálculo
+				function agregarFila() {
+					//Se crea contenedor correspondiente a la nueva fila, definiendo su clase y su html
+					var filaResultado = document.createElement('div');
+					filaResultado.className = 'form-row justify-content-center';
+					filaResultado.innerHTML = '<div class="col-md-6"><h3 id="suma" style="text-align: center;"></h3></div>';
+
+					//Se agrega fila a la sección
+					document.getElementById('seccionCalculadora').append(filaResultado);
+
+					//Se establece que la fila ya fue agregada, para evitar que agreguen filas de más
+					filaResultadoAgregada = true;
+				}
+
+				//Función que realizará cálculos y hará las inyecciones de HTML correspondientes al caso
+				function calcular()
+				{
+					//Si es primera vez que se ejecuta, se agrega la fila, si no, no hace falta
+					if (!filaResultadoAgregada) {
+						agregarFila();
+					}
+					
+					//Se capturan los valores númericos ingresados por el usuario
+					var a = parseFloat(document.getElementById("inputNo1").value);
+					var b = parseFloat(document.getElementById("inputNo2").value);
+					//Se inicializa variable que contendrá el resultado del cálculo
+					var c;
+
+					//Se captura opción de operación seleccionada por el usuario
+					var operacion = parseInt(document.getElementById("seleccionOperacion").value);
+
+					//Mensaje de error en caso de que usuario haga click en 'Calcular' sin escoger una operación
+					var errorOperacion = `<div class="alert alert-danger" role="alert">
+                                                      					ERROR: <br> ¡Debe seleccionar una operación!
+                                                  					</div>`;
+
+					switch(operacion) {
+
+						//Suma
+						case 1:
+							c = a + b;
+							break;
+						
+						//Resta
+						case 2:
+							c = a - b;
+							break;
+
+						//Multiplicación
+						case 3:
+							c = a * b;
+							break;		
+							
+						//División
+						case 4:
+							c = Math.round(a/b);
+							break;	
+						
+						//Potencia
+						case 5:
+							c = a**b;
+							break;	
+						
+						//Raíz
+						case 6:
+							c = a**(1/b);
+							break;	
+							
+						//Modulo
+						case 7:
+							c = a%b;
+							break;	
+							
+						//Si el usuario no elige una operación, el mensaje de errorOperacion se le asignará a la variable de resultado
+						default:
+							c = errorOperacion;
+							break;
+					}
+
+					//Testeo de variables
+					console.log(a)
+					console.log(b)
+					console.log(operacion)
+					console.log(c)
+
+
+					//Si hay un número no ingresado o erróneo (por ejemplo, '4+') que provoca un NaN como resultado, se mostrará un mensaje de error correspondiente
+					//En cambio, si todo está bien, inyectamos el resultado en el HTML
+					if (isNaN(c) && c != errorOperacion) {
+						document.getElementById("suma").innerHTML = `<div class="alert alert-danger" role="alert">
+                                                      					ERROR: <br> ¡Ingrese valores válidos!
+                                                  					</div>`;
+					} else {
+						document.getElementById("suma").innerHTML = c;	
+					}
+					
+				}
+			</script>
+	</body>
+</html>
