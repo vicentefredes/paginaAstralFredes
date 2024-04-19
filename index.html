@@ -26,6 +26,7 @@
 					<nav id="nav">
 						<a href="#" class="icon solid fa-home"><span>Inicio</span></a>
 						<a href="#calculadora" class="icon solid fa-calculator"><span>Calculadora</span></a>
+						<a href="#tabla" class="icon solid fa-xmark"><span>Tabla de Multiplicar</span></a>
 						<a href="#contact" class="icon solid fa-envelope"><span>Contacto</span></a>
 						<a href="https://twitter.com/numetal_moment" class="icon brands fa-twitter"><span>Twitter</span></a>
 					</nav>
@@ -36,10 +37,13 @@
 						<!-- Me -->
 							<article id="home" class="panel intro">
 								<header>
-									<h1>Página 'Astral'</h1>
-									<p>Vicente Fredes Estuardo</p>
-
+									<h1 id="titulo">Página 'Astral'</h1>
+									<p id="subtitulo">Vicente Fredes Estuardo</p>
+									<br>
+									<button type="button" class="btn btn-secondary" id="btnFondo" onclick="cambiarFondo();">Cambiar Fondo</button>
+									<button type="button" class="btn btn-secondary" id="btnFuente" onclick="cambiarFuente();">Cambiar Fuente</button>
 								</header>
+
 								<a href="#calculadora" class="jumplink pic">
 									<span class="arrow icon solid fa-chevron-right"><span>Ir a calculadora</span></span>
 									<img src="images/andromeda.webp" alt="" />
@@ -96,6 +100,54 @@
 										  </div>									
 								</section>
 							</article>
+
+													<!-- Tabla Multiplicar -->
+													<article id="tabla" class="panel">
+														<header>
+															<h2>Tabla de Multiplicar</h2>
+														</header>
+														<p>
+															Escoja un número entre el 1 y el 10 para desplegar su respectiva tabla.
+														</p>
+														<section id="seccionCalculadora">
+															<form action="#" method="post" id="formCalculadora">
+																<div class="form-row justify-content-center">
+																	<div class="form-group col-md-2 col-sm-6">
+																		<br>
+																		<select class="form-control" id="seleccionNum">
+																			<option selected value="0">...</option>
+																			<option value="1">1</option>
+																			<option value="2">2</option>
+																			<option value="3">3</option>
+																			<option value="4">4</option>
+																			<option value="5">5</option>
+																			<option value="6">6</option>
+																			<option value="7">7</option>
+																			<option value="8">8</option>
+																			<option value="9">9</option>
+																			<option value="10">10</option>
+																		</select>
+																	  </div>
+																	<div class="form-group col-md-4 col-sm-6 mt-3">
+																		<button type="button" class="btn btn-secondary" id="btnGenerar" onclick="generarTabla(parseFloat(document.getElementById('seleccionNum').value));">Generar Tabla</button>
+																	</div> 
+																	<div class="form-group col-md-2 col-sm-6 mt-3">
+																		<button type="button" class="btn btn-secondary" id="btnLimpiar" onclick="limpiar();">Limpiar</button>
+																	</div> 
+																</div>
+																</form>
+																<div class="form-row justify-content-center">
+																	<div class="col-md-6">
+																		<button type="button" class="btn btn-secondary" id="btnGenerarTodas" onclick="generarTablas1a10();">Generar Todas las Tablas (1-10)</button>
+																	</div>
+																  </div>	
+																<div class="form-row justify-content-center" style="margin-top: 5%;">
+																	<div class="col-md-6">
+																		<h3 style="text-align: center;">Resultado:</h3>
+																	</div>
+																  </div>									
+														</section>
+													</article>
 
 						<!-- Contact -->
 							<article id="contact" class="panel">
@@ -155,6 +207,59 @@
 			<script src="assets/js/main.js"></script>
 
 			<script>
+				function generarColorAleatorio() {
+					var r = Math.floor(Math.random() * 256); // Valor entre 0 y 255
+					var g = Math.floor(Math.random() * 256); // Valor entre 0 y 255
+					var b = Math.floor(Math.random() * 256); // Valor entre 0 y 255
+
+					// Construye el string con la sintaxis 'rgb(r, g, b)'
+					var colorRGB = 'rgb(' + r + ', ' + g + ', ' + b + ')';
+
+					return colorRGB;
+				}
+
+
+				function cambiarFondo() {
+					var paginas = document.querySelectorAll("article");
+					var btnFondo = document.getElementById("btnFondo");
+					var colorNuevo = generarColorAleatorio();
+
+					paginas.forEach( function(pag) {
+						pag.style.backgroundColor = colorNuevo;
+					});
+				}
+
+				function generarFuenteAleatoria() {
+					// Lista de fuentes
+					var fuentes = [
+						'Arial',
+						'Helvetica',
+						'Times New Roman',
+						'Georgia',
+						'Courier New',
+						'Verdana',
+						'Geneva',
+						'Arial Black',
+						'Impact',
+						'Comic Sans MS',
+						'Trebuchet MS'
+					];
+
+					// Selecciona una fuente aleatoria de la lista
+					var indiceAleatorio = Math.floor(Math.random() * fuentes.length);
+					var fontFamilyAleatorio = fuentes[indiceAleatorio];
+
+					return fontFamilyAleatorio;
+				}
+
+				function cambiarFuente() {
+					// Selecciona el elemento <body>
+					var body = document.body;
+
+					// Cambia el font-family del body
+					body.style.fontFamily = generarFuenteAleatoria();
+				}
+
 				//Variable para que la fila(row) correspondiente al resultado solamente se agregue la primera vez que se haga click en 'Calcular'
 				var filaResultadoAgregada = false;
 
@@ -256,6 +361,42 @@
 					}
 					
 				}
+			
+			function generarTabla(a) {
+				if (!filaResultadoAgregada) {
+						agregarFila();
+					}
+
+				var tabla = document.createElement("table");
+
+				var encabezado = document.createElement("tr");
+        		var th = document.createElement("th");
+				th.textContent = a;
+				encabezado.appendChild(th);
+        		tabla.appendChild(encabezado);
+
+				for (var i = 1; i <= 10; i++) {
+					var resultado = a * i;
+					var fila = document.createElement("tr");
+            		var td = document.createElement("td");
+					td.textContent = resultado;
+            		fila.appendChild(td);
+            		tabla.appendChild(fila);
+					console.log(a + " x " + i + " = " + resultado);
+				}	
+				
+				document.getElementById("filaResultado").innerHTML = '';
+				document.getElementById("filaResultado").appendChild(tabla);
+
+				document.getElementById('seccionCalculadora').append(filaResultado);
+	
+			}
+
+			function generarTablas1a10() {
+				for (var i = 1; i <= 10; i++) {
+					generarTabla(i);
+				}	
+			}
 			
 			function limpiar() {
 				document.getElementById('formCalculadora').reset();

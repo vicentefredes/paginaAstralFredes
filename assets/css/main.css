@@ -2196,15 +2196,29 @@ h2 {
 	text-align: center;
 }
 
+#btnFondo, #btnFuente {
+	background-color: whitesmoke;
+	color: black;
+	font-size: 20px;
+	font-weight: bold;
+	width: 70%;
+	margin-top: 2%;
+}
+
 #btnEnviar {
 	margin-top: 5%;
 	background-color: black;
 	font-size: 30px;
 }
 
-#btnCalcular {
+#btnCalcular, #btnGenerar {
 	background-color: black;
 	font-size: 25px;
+}
+
+#btnGenerarTodas {
+	background-color: black;
+	font-size: 20px;
 }
 
 #btnLimpiar {
@@ -2238,6 +2252,16 @@ h2 {
 }
 
 #seleccionOperacion option {
+	text-align: center;
+	font-weight: bold;
+}
+
+#seleccionNum {
+	text-align: center;
+	font-weight: bold;
+}
+
+#seleccionNum option {
 	text-align: center;
 	font-weight: bold;
 }
