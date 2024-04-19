@@ -85,7 +85,7 @@
 												<button type="button" class="btn btn-secondary" id="btnCalcular" onclick="calcular();">Calcular</button>
 											</div> 
 											<div class="form-group col-md-2 col-sm-6 mx-3 mt-3">
-												<button type="button" class="btn btn-secondary" id="btnLimpiar" onclick="document.getElementById('formCalculadora').reset();">Limpiar</button>
+												<button type="button" class="btn btn-secondary" id="btnLimpiar" onclick="limpiar();">Limpiar</button>
 											</div> 
 										</div>
 										</form>
@@ -163,6 +163,7 @@
 					//Se crea contenedor correspondiente a la nueva fila, definiendo su clase y su html
 					var filaResultado = document.createElement('div');
 					filaResultado.className = 'form-row justify-content-center';
+					filaResultado.id = "filaResultado";
 					filaResultado.innerHTML = '<div class="col-md-6"><h3 id="suma" style="text-align: center;"></h3></div>';
 
 					//Se agrega fila a la sección
@@ -255,6 +256,15 @@
 					}
 					
 				}
+			
+			function limpiar() {
+				document.getElementById('formCalculadora').reset();
+				document.getElementById("seccionCalculadora").removeChild(document.getElementById("filaResultado"));
+
+				filaResultadoAgregada = false;
+			}
+
+
 			</script>
 	</body>
 </html>
