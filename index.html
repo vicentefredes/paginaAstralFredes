@@ -44,7 +44,7 @@
 									<button type="button" class="btn btn-secondary" id="btnFuente" onclick="cambiarFuente();">Cambiar Fuente</button>
 								</header>
 
-								<a href="#calculadora" class="jumplink pic">
+								<a href="calculadora" class="jumplink pic">
 									<span class="arrow icon solid fa-chevron-right"><span>Ir a calculadora</span></span>
 									<img src="images/andromeda.webp" alt="" />
 								</a>
@@ -137,8 +137,8 @@
 										</div>
 									</form>
 									<div class="form-row justify-content-center">
-										<div class="col-md-6">
-											<button type="button" class="btn btn-secondary" id="btnGenerarTodas" onclick="generarTablaMultiplicacion();">Generar Todas las Tablas (1-10)</button>
+										<div class="col-md-6 text-center">
+											<button type="button" class="btn btn-secondary" id="btnGenerarTodas" onclick="generarTablas1al10();">Generar Tablas del 1 al 10</button>
 										</div>
 									</div>	
 									<div class="form-row justify-content-center" style="margin-top: 5%;">
@@ -263,6 +263,15 @@
 				//Variable para que la fila(row) correspondiente al resultado solamente se agregue la primera vez que se haga click en 'Calcular'
 				var filaResultadoAgregada = false;
 
+				var enlacesNav = document.querySelectorAll('#nav a');
+				enlacesNav.forEach(function(enlace) {
+					enlace.addEventListener('click', function(event) {
+						limpiar(document.getElementById('formCalculadora'), document.getElementById('seccionCalculadora'));
+						limpiar(document.getElementById('formTablas'), document.getElementById('seccionTablas'));
+						//filaResultadoAgregada = false;
+					})
+				});
+
 				//Función para agregar fila (row) en donde se mostrará el resultado del cálculo
 				function agregarFila(seccion) {
 					//Se crea contenedor correspondiente a la nueva fila, definiendo su clase y su html
@@ -352,12 +361,18 @@
 
 					//Si hay un número no ingresado o erróneo (por ejemplo, '4+') que provoca un NaN como resultado, se mostrará un mensaje de error correspondiente
 					//En cambio, si todo está bien, inyectamos el resultado en el HTML
-					if (isNaN(c) && c != errorOperacion) {
+					if (c === errorOperacion) {
+						document.getElementById("filaResultado").innerHTML = errorOperacion;
+					} else if (isNaN(c)) {
 						document.getElementById("filaResultado").innerHTML = `<div class="alert alert-danger" role="alert">
-                                                      					ERROR: <br> ¡Ingrese valores válidos!
-                                                  					</div>`;
+																					ERROR: <br> ¡Ingrese valores numéricos válidos!
+																				</div>`;
+					} else if (!isFinite(c)) {
+						document.getElementById("filaResultado").innerHTML = `<div class="alert alert-warning" role="alert">
+																					¡El resultado es demasiado grande!
+																				</div>`;
 					} else {
-						document.getElementById("filaResultado").innerHTML = `<h3 style="text-align: center;">${c}</h3>`;	
+						document.getElementById("filaResultado").innerHTML = `<h3 style="text-align: center;">${c}</h3>`;    
 					}
 					
 				}
@@ -367,48 +382,50 @@
 						agregarFila(document.getElementById('seccionTablas'));
 					}
 
-				var tabla = document.createElement("table");
+				if (a === 0) {
+					document.getElementById("filaResultado").innerHTML = `<div class="alert alert-danger" role="alert">
+																					ERROR: <br> ¡Debe seleccionar un número entre 1 y 10!
+																				</div>`;
+				} else {
+					var tabla = document.createElement("table");
 
-				var encabezado = document.createElement("tr");
-        		var thMultiplicador = document.createElement("th");
-				var thResultado = document.createElement("th");
-				thMultiplicador.textContent = a + " x";
-				thResultado.textContent = "=";
-				encabezado.appendChild(thMultiplicador);
-				encabezado.appendChild(thResultado);
-        		tabla.appendChild(encabezado);
+					var encabezado = document.createElement("tr");
+					var thMultiplicador = document.createElement("th");
+					var thResultado = document.createElement("th");
+					thMultiplicador.textContent = a + " x";
+					thResultado.textContent = "=";
+					encabezado.appendChild(thMultiplicador);
+					encabezado.appendChild(thResultado);
+					tabla.appendChild(encabezado);
 
-				for (var i = 1; i <= 10; i++) {
-					var resultado = a * i;
-					var fila = document.createElement("tr");
-            		var tdMultiplicador = document.createElement("td");
-					var tdResultado = document.createElement("td");
-					tdMultiplicador.textContent = i;
-					tdResultado.textContent = resultado;
-					fila.appendChild(tdMultiplicador);
-            		fila.appendChild(tdResultado);
-            		tabla.appendChild(fila);
-					console.log(a + " x " + i + " = " + resultado);
-				}	
+					for (var i = 1; i <= 10; i++) {
+						var resultado = a * i;
+						var fila = document.createElement("tr");
+						var tdMultiplicador = document.createElement("td");
+						var tdResultado = document.createElement("td");
+						tdMultiplicador.textContent = i;
+						tdResultado.textContent = resultado;
+						fila.appendChild(tdMultiplicador);
+						fila.appendChild(tdResultado);
+						tabla.appendChild(fila);
+						console.log(a + " x " + i + " = " + resultado);
+					}	
+					
+					document.getElementById("filaResultado").innerHTML = '';
+					document.getElementById("filaResultado").appendChild(tabla);
+				}
 				
-				document.getElementById("filaResultado").innerHTML = '';
-				document.getElementById("filaResultado").appendChild(tabla);
 			}
 
-			function generarTablas1a10() {
-				for (var i = 1; i <= 10; i++) {
-					generarTabla(i);
-				}	
-			}
-
-
-			function generarTablaMultiplicacion() {
+			function generarTablas1al10() {
 				if (!filaResultadoAgregada) {
 					agregarFila(document.getElementById('seccionTablas'));
 				}
 
+				var tablaContainer = document.createElement("div");
+    			tablaContainer.className = "table-container";
+
 				var tabla = document.createElement("table");
-				tabla.classList.add("table");
 
 				var encabezado = document.createElement("tr");
 				var thSigno = document.createElement("th");
@@ -435,20 +452,23 @@
 					tabla.appendChild(fila);
 				}
 
+				tablaContainer.appendChild(tabla);
+
 				var divFilaResultado = document.getElementById("filaResultado");
 				divFilaResultado.innerHTML = '';
-				divFilaResultado.appendChild(tabla);
+				divFilaResultado.appendChild(tablaContainer);
 			}
-
 
 			
 			function limpiar(form, seccion) {
 				form.reset();
-				seccion.removeChild(document.getElementById("filaResultado"));
 
-				filaResultadoAgregada = false;
+				if (filaResultadoAgregada && filaResultado.parentNode === seccion) { 
+					seccion.removeChild(document.getElementById("filaResultado"));
+					filaResultadoAgregada = false;
+				}
+				
 			}
-
 
 			</script>
 	</body>

@@ -2231,7 +2231,7 @@ h2 {
 	text-align: center;
 }
 
-.alert-danger {
+.alert-danger, .alert-warning {
 	font-size: 20px;
 	text-align: center;
 	margin-top: 5%;
@@ -2283,4 +2283,12 @@ th {
 	font-weight: bold; /* Hacer los encabezados en negrita */
 	text-align: center !important;
 	background-color: rgb(247, 212, 212);
+}
+
+td {
+	background-color: whitesmoke;
+}
+
+.table-container {
+	overflow-x: auto;
 }
