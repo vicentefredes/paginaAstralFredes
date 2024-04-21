@@ -2227,7 +2227,7 @@ h2 {
 	font-size: 25px;
 }
 
-#calculadora p {
+#calculadora, #tabla p {
 	text-align: center;
 }
 
@@ -2259,9 +2259,28 @@ h2 {
 #seleccionNum {
 	text-align: center;
 	font-weight: bold;
+	font-size: 25px;;
 }
 
 #seleccionNum option {
 	text-align: center;
 	font-weight: bold;
+}
+
+table {
+	border-collapse: collapse;
+	margin-top: 5%;
+	width: 30%;
+}
+
+th, td {
+	border: 1px solid black; /* Agregar bordes */
+	padding: 1vh; /* Espacio interno */
+	text-align: center; /* Centrar el contenido */
+}
+
+th {
+	font-weight: bold; /* Hacer los encabezados en negrita */
+	text-align: center !important;
+	background-color: rgb(247, 212, 212);
 }
