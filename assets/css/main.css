@@ -2227,7 +2227,7 @@ h2 {
 	font-size: 25px;
 }
 
-#calculadora, #tabla p {
+#calculadora, #tabla, #botones, #discos p {
 	text-align: center;
 }
 
@@ -2291,4 +2291,18 @@ td {
 
 .table-container {
 	overflow-x: auto;
+}
+
+#btnGenerarBotones {
+	background-color: black;
+	color: white;
+	font-size: 20px;
+	padding-left: 10%;
+	padding-right: 10%;
+	margin-bottom: 10%;
+}
+
+#btnAutomatico {
+	margin-bottom: 10%;
+	font-size: 20px;;
 }

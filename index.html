@@ -27,6 +27,8 @@
 						<a href="#" class="icon solid fa-home"><span>Inicio</span></a>
 						<a href="#calculadora" class="icon solid fa-calculator"><span>Calculadora</span></a>
 						<a href="#tabla" class="icon solid fa-table"><span>Tablas</span></a>
+						<a href="#botones" class="icon solid fa-circle"><span>Botones</span></a>
+						<a href="#discos" class="icon solid fa-record-vinyl"><span>Discos</span></a>
 						<a href="#contact" class="icon solid fa-envelope"><span>Contacto</span></a>
 						<a href="https://twitter.com/numetal_moment" class="icon brands fa-twitter"><span>Twitter</span></a>
 					</nav>
@@ -146,6 +148,63 @@
 											<h3 style="text-align: center;">Resultado:</h3>
 										</div>
 									</div>									
+								</section>
+							</article>
+
+						<!-- Botones -->
+							<article id="botones" class="panel">
+								<header>
+									<h2>Botones</h2>
+								</header>
+								<p>
+									Aquí puedes generar 10 botones automáticamente:
+								</p>
+								<section id="seccionBotones">
+									<div class="row justify-content-center">
+										<div class="col-md-6 text-center">
+											<button type="button" class="btn btn-secondary" id="btnGenerarBotones" onclick="generarBotones();">Generar Botones</button>
+										</div>
+									</div>
+									<div id="containerBotones">
+										<div class="row justify-content-center">
+											<div class="col-md-3 boton text-center"></div>
+											<div class="col-md-3 boton text-center"></div>
+											<div class="col-md-3 boton text-center"></div>
+										</div>		
+										<div class="row justify-content-center">
+											<div class="col-md-3 boton text-center"></div>
+											<div class="col-md-3 boton text-center"></div>
+											<div class="col-md-3 boton text-center"></div>
+										</div>		
+										<div class="row justify-content-center">
+											<div class="col-md-3 boton text-center"></div>
+											<div class="col-md-3 boton text-center"></div>
+										</div>
+									</div>
+																	
+								</section>
+							</article>
+						
+						<!-- Discos -->
+							<article id="discos" class="panel">
+								<header>
+									<h2>Discos</h2>
+								</header>
+								<p>
+									Aquí verás las portadas de 3 discos generada automáticamente:
+								</p>
+								<section id="seccionDiscos">
+									<div class="row justify-content-center">
+										<div class="col-md-3 text-center">
+											<div class = "card disco"></div>
+										</div>
+										<div class="col-md-3 text-center">
+											<div class = "card disco"></div>
+										</div>
+										<div class="col-md-3 text-center">
+											<div class = "card disco"></div>
+										</div>
+									</div>										
 								</section>
 							</article>
 
@@ -278,6 +337,20 @@
 					enlace.addEventListener('click', function(event) {
 						limpiar(document.getElementById('formCalculadora'), document.getElementById('seccionCalculadora'));
 						limpiar(document.getElementById('formTablas'), document.getElementById('seccionTablas'));
+						document.getElementById("containerBotones").innerHTML = `<div class="row justify-content-center">
+																					<div class="col-md-3 boton text-center"></div>
+																					<div class="col-md-3 boton text-center"></div>
+																					<div class="col-md-3 boton text-center"></div>
+																				</div>		
+																				<div class="row justify-content-center">
+																					<div class="col-md-3 boton text-center"></div>
+																					<div class="col-md-3 boton text-center"></div>
+																					<div class="col-md-3 boton text-center"></div>
+																				</div>		
+																				<div class="row justify-content-center">
+																					<div class="col-md-3 boton text-center"></div>
+																					<div class="col-md-3 boton text-center"></div>
+																				</div>`
 					})
 				});
 
@@ -505,6 +578,28 @@
 					this.value = this.value.slice(0, maxLength); // Limita la longitud del valor al máximo permitido
 				}
 			});
+
+
+			function generarBotones() {
+				var botones = document.querySelectorAll(".col-md-3.boton");
+
+				botones.forEach((boton, index) => {
+					var numero = index + 1
+					boton.innerHTML = `<button type="button" class="btn btn-secondary" id="btnAutomatico" style="background-color: ${generarColorAleatorio()}">Botón ${numero}</button>`;
+				});
+			}
+
+			function generarDiscos() {
+				var cards = document.querySelectorAll(".card.disco");
+				var discos = ["disco1.jpg", "disco2.jpg", "disco3.jpg"];
+
+				cards.forEach((card, index) => {
+					card.innerHTML = `<img class="card-img-top" src="images/${discos[index]}">`;
+					console.log(`<img class="card-img-top" src="images/${discos[index]}">`);
+				});
+			}
+
+			generarDiscos();
 
 			</script>
 	</body>
