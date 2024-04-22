@@ -154,39 +154,42 @@
 								<header>
 									<h2>Formulario de Contacto:</h2>
 								</header>
-								<form action="#" method="post">
-									<div class="form-row">
-										<div class="form-group col-md-6">
-										  <label for="inputNombre">Nombre</label>
-										  <input type="text" class="form-control" id="inputNombre" placeholder="Nombre">
+								<section id="seccionContacto">
+									<form action="#" method="post" id="formContacto">
+										<div class="form-row">
+											<div class="form-group col-md-6">
+											<label for="inputNombre">Nombre</label>
+											<input type="text" class="form-control" id="inputNombre" placeholder="Nombre">
+											</div>
+											<div class="form-group col-md-6">
+												<label for="inputApellido">Apellido</label>
+												<input type="text" class="form-control" id="inputApellido" placeholder="Apellido">
+											</div>
 										</div>
-										<div class="form-group col-md-6">
-											<label for="inputApellido">Apellido</label>
-											<input type="text" class="form-control" id="inputApellido" placeholder="Apellido">
+										<div class="form-row">
+											<div class="form-group col-md-6">
+												<label for="inputEmail">Correo Electrónico</label>
+												<input type="email" class="form-control" id="inputEmail" placeholder="usuario123@mail.com">
+											</div>
+											<div class="form-group col-md-6">
+												<label for="inputTelefono">Teléfono Celular</label>
+												<input type="number" class="form-control" id="inputTelefono" placeholder="9XXXXXXXX">
+											</div>
 										</div>
-									</div>
-									<div class="form-row">
-										<div class="form-group col-md-6">
-											<label for="inputEmail">Correo Electrónico</label>
-											<input type="email" class="form-control" id="inputEmail" placeholder="usuario123@mail.com">
-										  </div>
-										<div class="form-group col-md-6">
-											<label for="inputTelefono">Teléfono Celular</label>
-											<input type="number" class="form-control" id="inputTelefono" placeholder="9XXXXXXXX">
+										<div class="form-row">
+											<div class="form-group col-md-12">
+											<label for="exampleFormControlTextarea1">Mensaje</label>
+											<textarea class="form-control" id="exampleFormControlTextarea1" rows="6"></textarea>
+											</div>
 										</div>
-									</div>
-									<div class="form-row">
-										<div class="form-group col-md-12">
-										  <label for="exampleFormControlTextarea1">Mensaje</label>
-										<textarea class="form-control" id="exampleFormControlTextarea1" rows="6"></textarea>
+										<div class="form-row">
+											<div class="form-group col-md-12" style="text-align: center; vertical-align: middle;">
+												<button type="button" class="btn btn-secondary" id="btnEnviar" onclick="mostrarConfirmaciónContacto()">Enviar</button>
+											</div>  
 										</div>
-									</div>
-									<div class="form-row">
-									  <div class="form-group col-md-12" style="text-align: center; vertical-align: middle;">
-										  <button type="submit" class="btn btn-secondary" id="btnEnviar">Enviar</button>
-									  </div>  
-									</div>
-								</form> 
+									</form> 
+								</section>
+								
 							</article>
 
 					</div>
@@ -207,6 +210,8 @@
 			<script src="assets/js/main.js"></script>
 
 			<script>
+
+				// Función que devuelve un color aleatorio en formato rgb
 				function generarColorAleatorio() {
 					var r = Math.floor(Math.random() * 256); // Valor entre 0 y 255
 					var g = Math.floor(Math.random() * 256); // Valor entre 0 y 255
@@ -218,7 +223,7 @@
 					return colorRGB;
 				}
 
-
+				// Función para cambiar color de fondo en toda la página mediante botón en el artículo de inicio
 				function cambiarFondo() {
 					var paginas = document.querySelectorAll("article");
 					var btnFondo = document.getElementById("btnFondo");
@@ -229,6 +234,7 @@
 					});
 				}
 
+				// Función que devuelve cualquiera de las fuentes especificadas en la lista
 				function generarFuenteAleatoria() {
 					// Lista de fuentes
 					var fuentes = [
@@ -252,6 +258,7 @@
 					return fontFamilyAleatorio;
 				}
 
+				// Función para cambiar fuente en toda la página mediante botón en el artículo de inicio
 				function cambiarFuente() {
 					// Selecciona el elemento <body>
 					var body = document.body;
@@ -260,133 +267,137 @@
 					body.style.fontFamily = generarFuenteAleatoria();
 				}
 
-				//Variable para que la fila(row) correspondiente al resultado solamente se agregue la primera vez que se haga click en 'Calcular'
+				// Variable para que la fila(row) correspondiente al resultado solamente se agregue la primera vez que se haga click en 'Calcular'
 				var filaResultadoAgregada = false;
 
+				// Variable que contiene un array con todos los elementos a (enlaces) de la barra de navegación de la página
 				var enlacesNav = document.querySelectorAll('#nav a');
+
+				// Iteramos en cada enlace del array, para que cada uno tenga un Event Listener que haga que se limpien los formularios y espacios de resultados/tablas al cambiar de artículo
 				enlacesNav.forEach(function(enlace) {
 					enlace.addEventListener('click', function(event) {
 						limpiar(document.getElementById('formCalculadora'), document.getElementById('seccionCalculadora'));
 						limpiar(document.getElementById('formTablas'), document.getElementById('seccionTablas'));
-						//filaResultadoAgregada = false;
 					})
 				});
 
-				//Función para agregar fila (row) en donde se mostrará el resultado del cálculo
+				// Función para agregar fila (row) en donde se mostrará el resultado del cálculo
+				// Se debe especificar la sección en la cual queremos agregar esta fila y la cual servira como parentNode (atributo)
 				function agregarFila(seccion) {
-					//Se crea contenedor correspondiente a la nueva fila, definiendo su clase y su html
+					// Se crea contenedor correspondiente a la nueva fila, definiendo su clase y su html
 					var filaResultado = document.createElement('div');
 					filaResultado.className = 'form-row justify-content-center';
 					filaResultado.id = "filaResultado";
 					filaResultado.innerHTML = '<div class="col-md-6"></div>';
 
-					//Se agrega fila a la sección
+					// Se agrega fila a la sección
 					seccion.append(filaResultado);
 
-					//Se establece que la fila ya fue agregada, para evitar que agreguen filas de más
+					// Se establece que la fila ya fue agregada, para evitar que agreguen filas de más
 					filaResultadoAgregada = true;
 				}
 
-				//Función que realizará cálculos y hará las inyecciones de HTML correspondientes al caso
+				// Función que realizará cálculos y hará las inyecciones de HTML correspondientes al caso
 				function calcular()
 				{
-					//Si es primera vez que se ejecuta, se agrega la fila, si no, no hace falta
+					// Si es primera vez que se ejecuta, se agrega la fila, si no, no hace falta
 					if (!filaResultadoAgregada) {
 						agregarFila(document.getElementById('seccionCalculadora'));
 					}
 					
-					//Se capturan los valores númericos ingresados por el usuario
+					// Se capturan los valores númericos ingresados por el usuario
 					var a = parseFloat(document.getElementById("inputNo1").value);
 					var b = parseFloat(document.getElementById("inputNo2").value);
-					//Se inicializa variable que contendrá el resultado del cálculo
+					// Se inicializa variable que contendrá el resultado del cálculo
 					var c;
 
-					//Se captura opción de operación seleccionada por el usuario
+					// Se captura opción de operación seleccionada por el usuario
 					var operacion = parseInt(document.getElementById("seleccionOperacion").value);
 
-					//Mensaje de error en caso de que usuario haga click en 'Calcular' sin escoger una operación
+					// Mensaje de error en caso de que usuario haga click en 'Calcular' sin escoger una operación
 					var errorOperacion = `<div class="alert alert-danger" role="alert">
                                                       					ERROR: <br> ¡Debe seleccionar una operación!
                                                   					</div>`;
 
 					switch(operacion) {
 
-						//Suma
+						// Suma
 						case 1:
 							c = a + b;
 							break;
 						
-						//Resta
+						// Resta
 						case 2:
 							c = a - b;
 							break;
 
-						//Multiplicación
+						// Multiplicación
 						case 3:
 							c = a * b;
 							break;		
 							
-						//División
+						// División
 						case 4:
 							c = Math.round(a/b);
 							break;	
 						
-						//Potencia
+						// Potencia
 						case 5:
 							c = a**b;
 							break;	
 						
-						//Raíz
+						// Raíz
 						case 6:
 							c = a**(1/b);
 							break;	
 							
-						//Modulo
+						// Modulo
 						case 7:
 							c = a%b;
 							break;	
 							
-						//Si el usuario no elige una operación, el mensaje de errorOperacion se le asignará a la variable de resultado
+						// Si el usuario no elige una operación, el mensaje de errorOperacion se le asignará a la variable de resultado
 						default:
 							c = errorOperacion;
 							break;
 					}
 
-					//Testeo de variables
+					// Testeo de variables
 					console.log(a)
 					console.log(b)
 					console.log(operacion)
 					console.log(c)
 
 
-					//Si hay un número no ingresado o erróneo (por ejemplo, '4+') que provoca un NaN como resultado, se mostrará un mensaje de error correspondiente
-					//En cambio, si todo está bien, inyectamos el resultado en el HTML
 					if (c === errorOperacion) {
-						document.getElementById("filaResultado").innerHTML = errorOperacion;
+						document.getElementById("filaResultado").innerHTML = errorOperacion; // Si no se escogió un operador, se mostrará mensaje de error correspondiente
 					} else if (isNaN(c)) {
 						document.getElementById("filaResultado").innerHTML = `<div class="alert alert-danger" role="alert">
-																					ERROR: <br> ¡Ingrese valores numéricos válidos!
-																				</div>`;
+																					ERROR: <br> ¡Ingrese valores numéricos válidos! 
+																				</div>`; // Si hay un número no ingresado o erróneo (por ejemplo, '4+') que provoca un NaN como resultado, se mostrará un mensaje de error correspondiente
 					} else if (!isFinite(c)) {
 						document.getElementById("filaResultado").innerHTML = `<div class="alert alert-warning" role="alert">
 																					¡El resultado es demasiado grande!
-																				</div>`;
+																				</div>`; // Reemplazo del 'Infinity' que puede terminar como resultado cuando el número es incalculable
 					} else {
-						document.getElementById("filaResultado").innerHTML = `<h3 style="text-align: center;">${c}</h3>`;    
+						document.getElementById("filaResultado").innerHTML = `<h3 style="text-align: center;">${c}</h3>`;  // Si todo está bien, inyectamos el resultado en el HTML como un h3
 					}
 					
 				}
 			
+			// Función para generar tabla de multiplicar de un número entre el 1 y el 10 escogido por el usuario
 			function generarTabla(a) {
+				// Si es primera vez que se ejecuta, se agrega la fila, si no, no hace falta
 				if (!filaResultadoAgregada) {
 						agregarFila(document.getElementById('seccionTablas'));
 					}
 
+				// Mensaje de error en caso de que usuario haga click en 'Generar Tabla' sin escoger un número
 				if (a === 0) {
 					document.getElementById("filaResultado").innerHTML = `<div class="alert alert-danger" role="alert">
 																					ERROR: <br> ¡Debe seleccionar un número entre 1 y 10!
 																				</div>`;
-				} else {
+				} else { // Si es sí escogió un número, se creará la tabla
 					var tabla = document.createElement("table");
 
 					var encabezado = document.createElement("tr");
@@ -398,33 +409,37 @@
 					encabezado.appendChild(thResultado);
 					tabla.appendChild(encabezado);
 
-					for (var i = 1; i <= 10; i++) {
-						var resultado = a * i;
+					for (var i = 1; i <= 10; i++) { // Ciclo por el cual se realizarán las multiplicaciones 
+						var resultado = a * i; // Cálculo del resultado
 						var fila = document.createElement("tr");
 						var tdMultiplicador = document.createElement("td");
 						var tdResultado = document.createElement("td");
-						tdMultiplicador.textContent = i;
-						tdResultado.textContent = resultado;
+						tdMultiplicador.textContent = i; // elemento td que especifica el número por el cual se está multiplicando
+						tdResultado.textContent = resultado; // Resultado se suma a la tabla como un elemento td
 						fila.appendChild(tdMultiplicador);
 						fila.appendChild(tdResultado);
 						tabla.appendChild(fila);
-						console.log(a + " x " + i + " = " + resultado);
+						console.log(a + " x " + i + " = " + resultado); // Testeo de multiplicaciones
 					}	
 					
 					document.getElementById("filaResultado").innerHTML = '';
-					document.getElementById("filaResultado").appendChild(tabla);
+					document.getElementById("filaResultado").appendChild(tabla); // Tabla se desplegará en la sección de resultado
 				}
 				
 			}
 
+			// Función para generar y desplegar automáticamente las tablas de multiplicar del 1 al 10
 			function generarTablas1al10() {
+				// Si es primera vez que se ejecuta, se agrega la fila, si no, no hace falta
 				if (!filaResultadoAgregada) {
 					agregarFila(document.getElementById('seccionTablas'));
 				}
 
+				// En este caso, para efectos de visualización, la tabla tendrá su propio contenedor
 				var tablaContainer = document.createElement("div");
     			tablaContainer.className = "table-container";
 
+				// Creación de tabla
 				var tabla = document.createElement("table");
 
 				var encabezado = document.createElement("tr");
@@ -434,41 +449,62 @@
 				encabezado.appendChild(thSigno);
 				tabla.appendChild(encabezado);
 
-				for (var i = 1; i <= 10; i++) {
+				for (var i = 1; i <= 10; i++) { // Ciclo que creará filas y columnas para una tabla de 10x10
 					var fila = document.createElement("tr");
 					var thNumero = document.createElement("th");
 					var thMultiplicador = document.createElement("th");
-					thNumero.textContent = i;
-					thMultiplicador.textContent = i;
+					thNumero.textContent = i; // Números 1-10 para las filas
+					thMultiplicador.textContent = i; // Números 1-10 para las columnas
 					fila.appendChild(thNumero);
 					encabezado.appendChild(thMultiplicador);
 					
-					for (var j = 1; j <= 10; j++) {
+					for (var j = 1; j <= 10; j++) { // Ciclo que realizará las multiplicaciones
 						var tdResultado = document.createElement("td");
-						tdResultado.textContent = i * j;
-						fila.appendChild(tdResultado);
+						tdResultado.textContent = i * j; // Cálculo
+						fila.appendChild(tdResultado); // Resultado se agrega a la tabla como elemento td
+						console.log(i + " x " + j + " = " + tdResultado.textContent); // Testo de multiplicaciones
 					}
 
-					tabla.appendChild(fila);
+					tabla.appendChild(fila); // Una vez que se hacen las 10 multiplicaciones la fila queda lista para sumarse a la tabla
 				}
 
-				tablaContainer.appendChild(tabla);
+				tablaContainer.appendChild(tabla); // Tabla se pone en su respectivo contenedor
 
-				var divFilaResultado = document.getElementById("filaResultado");
-				divFilaResultado.innerHTML = '';
-				divFilaResultado.appendChild(tablaContainer);
+				document.getElementById("filaResultado").innerHTML = '';
+				document.getElementById("filaResultado").appendChild(tablaContainer); // Tabla se desplegará en la sección de resultado 
 			}
 
-			
+			// Función que limpia forms y, cuando aplica, elimina el div con el resultado de los cálculos matemáticos
+			// Al invocarla, se deben especificar el form y la sección en el cual este se encuentra (parámetros)
 			function limpiar(form, seccion) {
 				form.reset();
 
+				// Verifica si la hay un resultado desplegado Y que este pertenezca a la misma sección utilizada como parámetro
 				if (filaResultadoAgregada && filaResultado.parentNode === seccion) { 
-					seccion.removeChild(document.getElementById("filaResultado"));
-					filaResultadoAgregada = false;
+					seccion.removeChild(document.getElementById("filaResultado")); // Elimina la fila con el resultado del último cálculo o tabla que se haya desplegada
+					filaResultadoAgregada = false; // Reestablece variable para que posteriores cálculos o generaciones de tablas se realicen correctamente
 				}
 				
 			}
+
+			// Función que despliega un alert informando que el mensaje en el formulario de contacto se ha enviado (sin validación)
+			function mostrarConfirmaciónContacto() {
+				window.alert('Mensaje enviado. ¡Gracias por contactarte con nosotros!');
+
+				// Una vez que se envía y se recibe el mensaje, se limpia el formulario
+				limpiar(document.getElementById('formContacto'), document.getElementById('seccionContacto'));
+			}
+
+			// Event Listener que impide al usuario ingresar caracteres no númericos o más de 9 dígitos en el campo de número de celular
+			document.getElementById('inputTelefono').addEventListener('input', function() {
+				var maxLength = 9; // Define la longitud máxima permitida
+
+				this.value = this.value.replace(/\D/g, ''); // Eliminada inmediatamente cualquier caracter no numérico
+
+				if (this.value.length > maxLength) {
+					this.value = this.value.slice(0, maxLength); // Limita la longitud del valor al máximo permitido
+				}
+			});
 
 			</script>
 	</body>
