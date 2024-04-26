@@ -223,7 +223,7 @@
 									<h2>Formulario de Contacto:</h2>
 								</header>
 								<section id="seccionContacto">
-									<form action="#" method="post" id="formContacto">
+									<form id="formContacto">
 										<div class="form-row">
 											<div class="form-group col-md-6">
 											<label for="inputNombre">Nombre</label>
@@ -247,17 +247,16 @@
 										<div class="form-row">
 											<div class="form-group col-md-12">
 											<label for="exampleFormControlTextarea1">Mensaje</label>
-											<textarea class="form-control" id="exampleFormControlTextarea1" rows="6"></textarea>
+											<textarea class="form-control" id="inputMensaje" rows="6"></textarea>
 											</div>
 										</div>
 										<div class="form-row">
 											<div class="form-group col-md-12" style="text-align: center; vertical-align: middle;">
-												<button type="button" class="btn btn-secondary" id="btnEnviar" onclick="mostrarConfirmaciónContacto()">Enviar</button>
+												<button type="button" class="btn btn-secondary" id="btnEnviar">Enviar</button>
 											</div>  
 										</div>
 									</form> 
-								</section>
-								
+								</section>						
 							</article>
 
 					</div>
@@ -552,6 +551,35 @@
 				}
 
 			// FORMULARIO DE CONTACTO
+				var formatoNombres = /^[a-zA-Z\s]+$/;
+				var formatoCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+				$("#btnEnviar").click(function() {
+					
+					let nombre = $("#inputNombre").val();
+					let apellido = $("#inputApellido").val();
+					let correo = $("#inputEmail").val();
+					let mensaje = $("#inputMensaje").val();
+					console.log(nombre + ' ' + apellido);
+					console.log(correo);
+
+					if (nombre.trim() == '' || !formatoNombres.test(nombre)) {
+						console.log ("nombre invalido");
+						}
+
+					if (apellido.trim() == '' || !formatoNombres.test(apellido)) {
+						console.log ("apellido invalido");
+						}
+
+					if (correo.trim() == '' || !formatoCorreo.test(correo)) {
+						console.log ("correo invalido");
+						}
+				
+					if (mensaje.trim() == '') {
+						console.log ("mensaje invalido");
+					}
+
+				});
 			
 				// Función que despliega un alert informando que el mensaje en el formulario de contacto se ha enviado (sin validación)
 				function mostrarConfirmaciónContacto() {
