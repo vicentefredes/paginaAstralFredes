@@ -28,7 +28,7 @@
 						<a href="#calculadora" class="icon solid fa-calculator"><span>Calculadora</span></a>
 						<a href="#tabla" class="icon solid fa-table"><span>Tablas</span></a>
 						<a href="#botones" class="icon solid fa-circle"><span>Botones</span></a>
-						<a href="#discos" class="icon solid fa-record-vinyl"><span>Discos</span></a>
+						<a href="#discos" class="icon solid fa-record-vinyl" id="enlaceDiscos"><span>Discos</span></a>
 						<a href="#contact" class="icon solid fa-envelope"><span>Contacto</span></a>
 						<a href="https://twitter.com/numetal_moment" class="icon brands fa-twitter"><span>Twitter</span></a>
 					</nav>
@@ -179,6 +179,10 @@
 										<div class="row justify-content-center">
 											<div class="col-md-3 boton text-center"></div>
 											<div class="col-md-3 boton text-center"></div>
+											<div class="col-md-3 boton text-center"></div>
+										</div>
+										<div class="row justify-content-center">
+											<div class="col-md-3 boton text-center"></div>
 										</div>
 									</div>
 																	
@@ -191,20 +195,25 @@
 									<h2>Discos</h2>
 								</header>
 								<p>
-									Aquí verás las portadas de 3 discos generada automáticamente:
+									Aquí verás la información de 4 discos aleatorios, generada automáticamente:
 								</p>
 								<section id="seccionDiscos">
 									<div class="row justify-content-center">
-										<div class="col-md-3 text-center">
+										<div class="col-md-5 text-center">
 											<div class = "card disco"></div>
 										</div>
-										<div class="col-md-3 text-center">
+										<div class="col-md-5 text-center">
 											<div class = "card disco"></div>
 										</div>
-										<div class="col-md-3 text-center">
+									</div>
+									<div class="row justify-content-center">
+										<div class="col-md-5 text-center">
 											<div class = "card disco"></div>
 										</div>
-									</div>										
+										<div class="col-md-5 text-center">
+											<div class = "card disco"></div>
+										</div>
+									</div>											
 								</section>
 							</article>
 
@@ -270,23 +279,25 @@
 
 			<script>
 
+			// CUSTOMIZACIÓN EN PÁGINA DE INICIO				
+
 				// Función que devuelve un color aleatorio en formato rgb
 				function generarColorAleatorio() {
-					var r = Math.floor(Math.random() * 256); // Valor entre 0 y 255
-					var g = Math.floor(Math.random() * 256); // Valor entre 0 y 255
-					var b = Math.floor(Math.random() * 256); // Valor entre 0 y 255
+					let r = Math.floor(Math.random() * 256); // Valor entre 0 y 255
+					let g = Math.floor(Math.random() * 256); // Valor entre 0 y 255
+					let b = Math.floor(Math.random() * 256); // Valor entre 0 y 255
 
 					// Construye el string con la sintaxis 'rgb(r, g, b)'
-					var colorRGB = 'rgb(' + r + ', ' + g + ', ' + b + ')';
+					let colorRGB = 'rgb(' + r + ', ' + g + ', ' + b + ')';
 
 					return colorRGB;
 				}
 
 				// Función para cambiar color de fondo en toda la página mediante botón en el artículo de inicio
 				function cambiarFondo() {
-					var paginas = document.querySelectorAll("article");
-					var btnFondo = document.getElementById("btnFondo");
-					var colorNuevo = generarColorAleatorio();
+					let paginas = document.querySelectorAll("article");
+					let btnFondo = document.getElementById("btnFondo");
+					let colorNuevo = generarColorAleatorio();
 
 					paginas.forEach( function(pag) {
 						pag.style.backgroundColor = colorNuevo;
@@ -296,7 +307,7 @@
 				// Función que devuelve cualquiera de las fuentes especificadas en la lista
 				function generarFuenteAleatoria() {
 					// Lista de fuentes
-					var fuentes = [
+					let fuentes = [
 						'Arial',
 						'Helvetica',
 						'Times New Roman',
@@ -311,8 +322,8 @@
 					];
 
 					// Selecciona una fuente aleatoria de la lista
-					var indiceAleatorio = Math.floor(Math.random() * fuentes.length);
-					var fontFamilyAleatorio = fuentes[indiceAleatorio];
+					let indiceAleatorio = Math.floor(Math.random() * fuentes.length);
+					let fontFamilyAleatorio = fuentes[indiceAleatorio];
 
 					return fontFamilyAleatorio;
 				}
@@ -320,45 +331,23 @@
 				// Función para cambiar fuente en toda la página mediante botón en el artículo de inicio
 				function cambiarFuente() {
 					// Selecciona el elemento <body>
-					var body = document.body;
+					let body = document.body;
 
 					// Cambia el font-family del body
 					body.style.fontFamily = generarFuenteAleatoria();
 				}
 
+
+			// GENERACIÓN DE ESPACIO PARA DESPLEGAR RESULTADOS DE CALCULADORA Y TABLAS
+
 				// Variable para que la fila(row) correspondiente al resultado solamente se agregue la primera vez que se haga click en 'Calcular'
 				var filaResultadoAgregada = false;
-
-				// Variable que contiene un array con todos los elementos a (enlaces) de la barra de navegación de la página
-				var enlacesNav = document.querySelectorAll('#nav a');
-
-				// Iteramos en cada enlace del array, para que cada uno tenga un Event Listener que haga que se limpien los formularios y espacios de resultados/tablas al cambiar de artículo
-				enlacesNav.forEach(function(enlace) {
-					enlace.addEventListener('click', function(event) {
-						limpiar(document.getElementById('formCalculadora'), document.getElementById('seccionCalculadora'));
-						limpiar(document.getElementById('formTablas'), document.getElementById('seccionTablas'));
-						document.getElementById("containerBotones").innerHTML = `<div class="row justify-content-center">
-																					<div class="col-md-3 boton text-center"></div>
-																					<div class="col-md-3 boton text-center"></div>
-																					<div class="col-md-3 boton text-center"></div>
-																				</div>		
-																				<div class="row justify-content-center">
-																					<div class="col-md-3 boton text-center"></div>
-																					<div class="col-md-3 boton text-center"></div>
-																					<div class="col-md-3 boton text-center"></div>
-																				</div>		
-																				<div class="row justify-content-center">
-																					<div class="col-md-3 boton text-center"></div>
-																					<div class="col-md-3 boton text-center"></div>
-																				</div>`
-					})
-				});
 
 				// Función para agregar fila (row) en donde se mostrará el resultado del cálculo
 				// Se debe especificar la sección en la cual queremos agregar esta fila y la cual servira como parentNode (atributo)
 				function agregarFila(seccion) {
 					// Se crea contenedor correspondiente a la nueva fila, definiendo su clase y su html
-					var filaResultado = document.createElement('div');
+					let filaResultado = document.createElement('div');
 					filaResultado.className = 'form-row justify-content-center';
 					filaResultado.id = "filaResultado";
 					filaResultado.innerHTML = '<div class="col-md-6"></div>';
@@ -370,6 +359,8 @@
 					filaResultadoAgregada = true;
 				}
 
+			// FUNCIONES PARA ARTÍCULOS DE MATEMÁTICA - CALCULADORA Y TABLAS DE MULTIPLICAR
+
 				// Función que realizará cálculos y hará las inyecciones de HTML correspondientes al caso
 				function calcular()
 				{
@@ -379,16 +370,16 @@
 					}
 					
 					// Se capturan los valores númericos ingresados por el usuario
-					var a = parseFloat(document.getElementById("inputNo1").value);
-					var b = parseFloat(document.getElementById("inputNo2").value);
+					let a = parseFloat(document.getElementById("inputNo1").value);
+					let b = parseFloat(document.getElementById("inputNo2").value);
 					// Se inicializa variable que contendrá el resultado del cálculo
-					var c;
+					let c;
 
 					// Se captura opción de operación seleccionada por el usuario
-					var operacion = parseInt(document.getElementById("seleccionOperacion").value);
+					let operacion = parseInt(document.getElementById("seleccionOperacion").value);
 
 					// Mensaje de error en caso de que usuario haga click en 'Calcular' sin escoger una operación
-					var errorOperacion = `<div class="alert alert-danger" role="alert">
+					let errorOperacion = `<div class="alert alert-danger" role="alert">
                                                       					ERROR: <br> ¡Debe seleccionar una operación!
                                                   					</div>`;
 
@@ -458,148 +449,296 @@
 					
 				}
 			
-			// Función para generar tabla de multiplicar de un número entre el 1 y el 10 escogido por el usuario
-			function generarTabla(a) {
-				// Si es primera vez que se ejecuta, se agrega la fila, si no, no hace falta
-				if (!filaResultadoAgregada) {
+				// Función para generar tabla de multiplicar de un número entre el 1 y el 10 escogido por el usuario
+				function generarTabla(a) {
+					// Si es primera vez que se ejecuta, se agrega la fila, si no, no hace falta
+					if (!filaResultadoAgregada) {
+							agregarFila(document.getElementById('seccionTablas'));
+						}
+
+					// Mensaje de error en caso de que usuario haga click en 'Generar Tabla' sin escoger un número
+					if (a === 0) {
+						document.getElementById("filaResultado").innerHTML = `<div class="alert alert-danger" role="alert">
+																						ERROR: <br> ¡Debe seleccionar un número entre 1 y 10!
+																					</div>`;
+					} else { // Si es sí escogió un número, se creará la tabla
+						let tabla = document.createElement("table");
+
+						let encabezado = document.createElement("tr");
+						let thMultiplicador = document.createElement("th");
+						let thResultado = document.createElement("th");
+						thMultiplicador.textContent = a + " x";
+						thResultado.textContent = "=";
+						encabezado.appendChild(thMultiplicador);
+						encabezado.appendChild(thResultado);
+						tabla.appendChild(encabezado);
+
+						for (let i = 1; i <= 10; i++) { // Ciclo por el cual se realizarán las multiplicaciones 
+							let resultado = a * i; // Cálculo del resultado
+							let fila = document.createElement("tr");
+							let tdMultiplicador = document.createElement("td");
+							let tdResultado = document.createElement("td");
+							tdMultiplicador.textContent = i; // elemento td que especifica el número por el cual se está multiplicando
+							tdResultado.textContent = resultado; // Resultado se suma a la tabla como un elemento td
+							fila.appendChild(tdMultiplicador);
+							fila.appendChild(tdResultado);
+							tabla.appendChild(fila);
+							console.log(a + " x " + i + " = " + resultado); // Testeo de multiplicaciones
+						}	
+						
+						document.getElementById("filaResultado").innerHTML = '';
+						document.getElementById("filaResultado").appendChild(tabla); // Tabla se desplegará en la sección de resultado
+					}
+					
+				}
+
+				// Función para generar y desplegar automáticamente las tablas de multiplicar del 1 al 10
+				function generarTablas1al10() {
+					// Si es primera vez que se ejecuta, se agrega la fila, si no, no hace falta
+					if (!filaResultadoAgregada) {
 						agregarFila(document.getElementById('seccionTablas'));
 					}
 
-				// Mensaje de error en caso de que usuario haga click en 'Generar Tabla' sin escoger un número
-				if (a === 0) {
-					document.getElementById("filaResultado").innerHTML = `<div class="alert alert-danger" role="alert">
-																					ERROR: <br> ¡Debe seleccionar un número entre 1 y 10!
-																				</div>`;
-				} else { // Si es sí escogió un número, se creará la tabla
-					var tabla = document.createElement("table");
+					// En este caso, para efectos de visualización, la tabla tendrá su propio contenedor
+					let tablaContainer = document.createElement("div");
+					tablaContainer.className = "table-container";
 
-					var encabezado = document.createElement("tr");
-					var thMultiplicador = document.createElement("th");
-					var thResultado = document.createElement("th");
-					thMultiplicador.textContent = a + " x";
-					thResultado.textContent = "=";
-					encabezado.appendChild(thMultiplicador);
-					encabezado.appendChild(thResultado);
+					// Creación de tabla
+					let tabla = document.createElement("table");
+
+					let encabezado = document.createElement("tr");
+					let thSigno = document.createElement("th");
+					thSigno.textContent = "X";
+					thSigno.style.backgroundColor = "rgb(209, 82, 203)";
+					encabezado.appendChild(thSigno);
 					tabla.appendChild(encabezado);
 
-					for (var i = 1; i <= 10; i++) { // Ciclo por el cual se realizarán las multiplicaciones 
-						var resultado = a * i; // Cálculo del resultado
-						var fila = document.createElement("tr");
-						var tdMultiplicador = document.createElement("td");
-						var tdResultado = document.createElement("td");
-						tdMultiplicador.textContent = i; // elemento td que especifica el número por el cual se está multiplicando
-						tdResultado.textContent = resultado; // Resultado se suma a la tabla como un elemento td
-						fila.appendChild(tdMultiplicador);
-						fila.appendChild(tdResultado);
-						tabla.appendChild(fila);
-						console.log(a + " x " + i + " = " + resultado); // Testeo de multiplicaciones
-					}	
-					
-					document.getElementById("filaResultado").innerHTML = '';
-					document.getElementById("filaResultado").appendChild(tabla); // Tabla se desplegará en la sección de resultado
-				}
-				
-			}
+					for (let i = 1; i <= 10; i++) { // Ciclo que creará filas y columnas para una tabla de 10x10
+						let fila = document.createElement("tr");
+						let thNumero = document.createElement("th");
+						let thMultiplicador = document.createElement("th");
+						thNumero.textContent = i; // Números 1-10 para las filas
+						thMultiplicador.textContent = i; // Números 1-10 para las columnas
+						fila.appendChild(thNumero);
+						encabezado.appendChild(thMultiplicador);
+						
+						for (var j = 1; j <= 10; j++) { // Ciclo que realizará las multiplicaciones
+							let tdResultado = document.createElement("td");
+							tdResultado.textContent = i * j; // Cálculo
+							fila.appendChild(tdResultado); // Resultado se agrega a la tabla como elemento td
+							console.log(i + " x " + j + " = " + tdResultado.textContent); // Testo de multiplicaciones
+						}
 
-			// Función para generar y desplegar automáticamente las tablas de multiplicar del 1 al 10
-			function generarTablas1al10() {
-				// Si es primera vez que se ejecuta, se agrega la fila, si no, no hace falta
-				if (!filaResultadoAgregada) {
-					agregarFila(document.getElementById('seccionTablas'));
-				}
-
-				// En este caso, para efectos de visualización, la tabla tendrá su propio contenedor
-				var tablaContainer = document.createElement("div");
-    			tablaContainer.className = "table-container";
-
-				// Creación de tabla
-				var tabla = document.createElement("table");
-
-				var encabezado = document.createElement("tr");
-				var thSigno = document.createElement("th");
-				thSigno.textContent = "X";
-				thSigno.style.backgroundColor = "rgb(209, 82, 203)";
-				encabezado.appendChild(thSigno);
-				tabla.appendChild(encabezado);
-
-				for (var i = 1; i <= 10; i++) { // Ciclo que creará filas y columnas para una tabla de 10x10
-					var fila = document.createElement("tr");
-					var thNumero = document.createElement("th");
-					var thMultiplicador = document.createElement("th");
-					thNumero.textContent = i; // Números 1-10 para las filas
-					thMultiplicador.textContent = i; // Números 1-10 para las columnas
-					fila.appendChild(thNumero);
-					encabezado.appendChild(thMultiplicador);
-					
-					for (var j = 1; j <= 10; j++) { // Ciclo que realizará las multiplicaciones
-						var tdResultado = document.createElement("td");
-						tdResultado.textContent = i * j; // Cálculo
-						fila.appendChild(tdResultado); // Resultado se agrega a la tabla como elemento td
-						console.log(i + " x " + j + " = " + tdResultado.textContent); // Testo de multiplicaciones
+						tabla.appendChild(fila); // Una vez que se hacen las 10 multiplicaciones la fila queda lista para sumarse a la tabla
 					}
 
-					tabla.appendChild(fila); // Una vez que se hacen las 10 multiplicaciones la fila queda lista para sumarse a la tabla
+					tablaContainer.appendChild(tabla); // Tabla se pone en su respectivo contenedor
+
+					document.getElementById("filaResultado").innerHTML = '';
+					document.getElementById("filaResultado").appendChild(tablaContainer); // Tabla se desplegará en la sección de resultado 
 				}
 
-				tablaContainer.appendChild(tabla); // Tabla se pone en su respectivo contenedor
+				// Función que limpia forms y, cuando aplica, elimina el div con el resultado de los cálculos matemáticos
+				// Al invocarla, se deben especificar el form y la sección en el cual este se encuentra (parámetros)
+				function limpiar(form, seccion) {
+					form.reset();
 
-				document.getElementById("filaResultado").innerHTML = '';
-				document.getElementById("filaResultado").appendChild(tablaContainer); // Tabla se desplegará en la sección de resultado 
-			}
-
-			// Función que limpia forms y, cuando aplica, elimina el div con el resultado de los cálculos matemáticos
-			// Al invocarla, se deben especificar el form y la sección en el cual este se encuentra (parámetros)
-			function limpiar(form, seccion) {
-				form.reset();
-
-				// Verifica si la hay un resultado desplegado Y que este pertenezca a la misma sección utilizada como parámetro
-				if (filaResultadoAgregada && filaResultado.parentNode === seccion) { 
-					seccion.removeChild(document.getElementById("filaResultado")); // Elimina la fila con el resultado del último cálculo o tabla que se haya desplegada
-					filaResultadoAgregada = false; // Reestablece variable para que posteriores cálculos o generaciones de tablas se realicen correctamente
+					// Verifica si la hay un resultado desplegado Y que este pertenezca a la misma sección utilizada como parámetro
+					if (filaResultadoAgregada && filaResultado.parentNode === seccion) { 
+						seccion.removeChild(document.getElementById("filaResultado")); // Elimina la fila con el resultado del último cálculo o tabla que se haya desplegada
+						filaResultadoAgregada = false; // Reestablece variable para que posteriores cálculos o generaciones de tablas se realicen correctamente
+					}
+					
 				}
-				
-			}
 
-			// Función que despliega un alert informando que el mensaje en el formulario de contacto se ha enviado (sin validación)
-			function mostrarConfirmaciónContacto() {
-				window.alert('Mensaje enviado. ¡Gracias por contactarte con nosotros!');
+			// FORMULARIO DE CONTACTO
+			
+				// Función que despliega un alert informando que el mensaje en el formulario de contacto se ha enviado (sin validación)
+				function mostrarConfirmaciónContacto() {
+					window.alert('Mensaje enviado. ¡Gracias por contactarte con nosotros!');
 
-				// Una vez que se envía y se recibe el mensaje, se limpia el formulario
-				limpiar(document.getElementById('formContacto'), document.getElementById('seccionContacto'));
-			}
-
-			// Event Listener que impide al usuario ingresar caracteres no númericos o más de 9 dígitos en el campo de número de celular
-			document.getElementById('inputTelefono').addEventListener('input', function() {
-				var maxLength = 9; // Define la longitud máxima permitida
-
-				this.value = this.value.replace(/\D/g, ''); // Eliminada inmediatamente cualquier caracter no numérico
-
-				if (this.value.length > maxLength) {
-					this.value = this.value.slice(0, maxLength); // Limita la longitud del valor al máximo permitido
+					// Una vez que se envía y se recibe el mensaje, se limpia el formulario
+					limpiar(document.getElementById('formContacto'), document.getElementById('seccionContacto'));
 				}
-			});
+
+				// Event Listener que impide al usuario ingresar caracteres no númericos o más de 9 dígitos en el campo de número de celular
+				document.getElementById('inputTelefono').addEventListener('input', function() {
+					let maxLength = 9; // Define la longitud máxima permitida
+
+					this.value = this.value.replace(/\D/g, ''); // Eliminada inmediatamente cualquier caracter no numérico
+
+					if (this.value.length > maxLength) {
+						this.value = this.value.slice(0, maxLength); // Limita la longitud del valor al máximo permitido
+					}
+				});
 
 
-			function generarBotones() {
+			// GENERACIÓN DE BOTONES
+
+				// Array con cada columna destinada al despliegue de los botones
 				var botones = document.querySelectorAll(".col-md-3.boton");
 
-				botones.forEach((boton, index) => {
-					var numero = index + 1
-					boton.innerHTML = `<button type="button" class="btn btn-secondary" id="btnAutomatico" style="background-color: ${generarColorAleatorio()}">Botón ${numero}</button>`;
+				// Función para generar botones - A ejecutarse mediante el click de un botón respectivo incluído en el artículo
+				function generarBotones() {
+					botones.forEach((boton, index) => {
+						let numero = index + 1 // conseguir posición del botón, para agregarla al texto que este tendrá
+						boton.innerHTML = `<button type="button" class="btn btn-secondary" id="btnAutomatico" style="background-color: ${generarColorAleatorio()}">Botón ${numero}</button>`;
+					});
+				}
+
+				// Función para eliminar botones, vaciando html de sus columnas - A ejecutarse en cambios de artículos
+				function limpiarBotones() {
+					botones.forEach((boton) => {
+						boton.innerHTML = '';
+						console.log("botones eliminados");
+					});
+				}
+
+			// GENERACIÓN DE DISCOS
+
+				// Array con todas las cards destinadas a discos
+				var cardsDiscos = document.querySelectorAll(".card.disco");	
+
+				// Array con portadas de discos
+				var discos = [
+					"disco1.jpg", 
+					"disco2.jpg", 
+					"disco3.jpg", 
+					"disco4.webp", 
+					"disco5.png", 
+					"disco6.webp", 
+					"disco7.png", 
+					"disco8.jfif", 
+					"disco9.png",
+					"disco10.jpg", 
+					"disco11.jpg",
+					"disco12.jpg",
+					"disco13.jpg",
+					"disco14.jpg",
+					"disco15.jpg",
+					"disco16.png"
+					];
+
+				// Array con títulos de discos
+				var titulos = [
+					"Alanis Morissette - Jagged Little Pill", 
+					"Fugazi - Repeater", 
+					"Javiera Mena - Esquemas Juveniles",
+					"Alex G - House of Sugar",
+					"Big Thief - Dragon New Warm Mountain I Believe In You",
+					"Caroline Polachek - Desire, I Want to Turn Into You",
+					"Lana Del Rey - Did You Know That There's a Tunnel Under Ocean Blvd",
+					"Sufjan Stevens - Javelin",
+					"Turnstile - Glown On",
+					"Miranda! - Sin Restricciones",
+					"Green Day - Kerplunk!",
+					"Nas - Illmatic",
+					"Estoy Bien - Apoyo Emocional",
+					"Death Cab for Cutie - Transatlanticism",
+					"Jimmy Eat World - Clarity",
+					"Avril Lavigne - Let Go"
+					];
+
+				// Array con años de lanzamiento de los discos
+				var anios = [
+					1995, 
+					1990, 
+					2006,
+					2019,
+					2022,
+					2023,
+					2023,
+					2023,
+					2021,
+					2004, 
+					1991,
+					1994,
+					2023,
+					2003,
+					1999,
+					2002
+					];
+
+				// Array con géneros musicales de los discos
+				var generos = [
+					"Rock Alternativo", 
+					"Post-Hardcore", 
+					"Synthpop",
+					"Indie Folk",
+					"Indie Folk",
+					"Art Pop",
+					"Art Pop",
+					"Indie Folk",
+					"Post-Hardcore",
+					"Synthpop",
+					"Pop Punk",
+					"Hip Hop",
+					"Emo",
+					"Indie Rock",
+					"Emo",
+					"Pop Rock"
+					];
+
+
+				// Función para agregar 4 discos seleccionados de forma aleatoria con portada, título, año y género a sus cards respectivas
+				function generarDiscos() {		
+					
+					// Se generan copias de los arrays, para que puedan mutarse en las iteraciones
+					let discosCopia = discos.slice();
+					let titulosCopia = titulos.slice();
+					let aniosCopia = anios.slice();
+					let generosCopia = generos.slice();
+
+					// Ciclo for que itera por las 4 cards, inyectando el html con los discos
+					cardsDiscos.forEach((card) => {
+						let indiceAleatorio = Math.floor(Math.random() * discosCopia.length); // discos seleccionados de forma aleatoria
+						card.innerHTML = `<img class="card-img-top" src="images/${discosCopia[indiceAleatorio]}">
+											<div class="card-body">
+												<h5 class="card-title">${titulosCopia[indiceAleatorio]}</h5>
+												<br>
+												<p>${aniosCopia[indiceAleatorio]}</p>
+												<p>${generosCopia[indiceAleatorio]}</p>
+											</div>`;
+						console.log(card.innerHTML); // testing
+
+						// Se elimina el index utilizado de las copias, para evitar que se repitan discos
+						discosCopia.splice(indiceAleatorio, 1);
+						titulosCopia.splice(indiceAleatorio, 1);
+						aniosCopia.splice(indiceAleatorio, 1);
+						generosCopia.splice(indiceAleatorio, 1);
+					});
+				}
+
+				// Función para limpiar cards, vaciando su html - A ejecutarse en cambios de artículos
+				function limpiarCardsDiscos() {
+					cardsDiscos.forEach((card) => {
+						card.innerHTML = "";
+						console.log("cards de discos vaciados");
+					})
+				};
+
+				// Al cargar inicialmente la página, que se ejecute la función por primera vez
+				generarDiscos();
+
+				// Si visitas el artículo de discos nuevamente tras haber cambiado de artículo, que se generen discos aleatorios nuevamente
+				document.getElementById('enlaceDiscos').addEventListener('click', function() {
+					generarDiscos();
 				});
-			}
 
-			function generarDiscos() {
-				var cards = document.querySelectorAll(".card.disco");
-				var discos = ["disco1.jpg", "disco2.jpg", "disco3.jpg"];
+			// LIMPIEZA DE ELEMENTOS EN CAMBIOS DE ARTÍCULO
 
-				cards.forEach((card, index) => {
-					card.innerHTML = `<img class="card-img-top" src="images/${discos[index]}">`;
-					console.log(`<img class="card-img-top" src="images/${discos[index]}">`);
+				// Variable que contiene un array con todos los elementos a (enlaces) de la barra de navegación de la página
+				var enlacesNav = document.querySelectorAll('#nav a');
+
+				// Iteramos en cada enlace del array, para que cada uno tenga un Event Listener que haga que se limpien los formularios, espacios de resultados/tablas, botones, y/o cards al cambiar de artículo
+				enlacesNav.forEach(function(enlace) {
+					enlace.addEventListener('click', function(event) {
+						limpiar(document.getElementById('formCalculadora'), document.getElementById('seccionCalculadora'));
+						limpiar(document.getElementById('formTablas'), document.getElementById('seccionTablas'));
+						limpiarBotones();
+						limpiarCardsDiscos();													
+					})
 				});
-			}
-
-			generarDiscos();
 
 			</script>
 	</body>

@@ -2306,3 +2306,14 @@ td {
 	margin-bottom: 10%;
 	font-size: 20px;;
 }
+
+.card {
+    text-align: center;
+    margin-bottom: 10%;
+	height: 97%;
+}
+
+.card p {
+	line-height: 0.5;
+	font-weight:600;
+}
