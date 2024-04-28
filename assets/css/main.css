@@ -2317,3 +2317,12 @@ td {
 	line-height: 0.5;
 	font-weight:600;
 }
+
+.is-invalid {
+    background-color: rgb(255, 212, 215) !important;
+	border: 3px solid red !important;
+}
+
+.invalid-feedback {
+    color: #dc3546bd !important;
+}

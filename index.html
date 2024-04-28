@@ -226,28 +226,33 @@
 									<form id="formContacto">
 										<div class="form-row">
 											<div class="form-group col-md-6">
-											<label for="inputNombre">Nombre</label>
+											<label for="inputNombre">Nombre *</label>
 											<input type="text" class="form-control" id="inputNombre" placeholder="Nombre">
+											<div class="invalid-feedback" id="nombreError"></div>
 											</div>
 											<div class="form-group col-md-6">
-												<label for="inputApellido">Apellido</label>
+												<label for="inputApellido">Apellido *</label>
 												<input type="text" class="form-control" id="inputApellido" placeholder="Apellido">
+												<div class="invalid-feedback" id="apellidoError"></div>
 											</div>
 										</div>
 										<div class="form-row">
 											<div class="form-group col-md-6">
-												<label for="inputEmail">Correo Electrónico</label>
+												<label for="inputEmail">Correo Electrónico *</label>
 												<input type="email" class="form-control" id="inputEmail" placeholder="usuario123@mail.com">
+												<div class="invalid-feedback" id="emailError"></div>
 											</div>
 											<div class="form-group col-md-6">
 												<label for="inputTelefono">Teléfono Celular</label>
 												<input type="number" class="form-control" id="inputTelefono" placeholder="9XXXXXXXX">
+												<div class="invalid-feedback" id="emailError">Por favor ingrese un número de teléfono celular válido</div>
 											</div>
 										</div>
 										<div class="form-row">
 											<div class="form-group col-md-12">
-											<label for="exampleFormControlTextarea1">Mensaje</label>
+											<label for="exampleFormControlTextarea1">Mensaje *</label>
 											<textarea class="form-control" id="inputMensaje" rows="6"></textarea>
+											<div class="invalid-feedback" id="mensajeError">El mensaje no puede estar vacío.</div>
 											</div>
 										</div>
 										<div class="form-row">
@@ -551,36 +556,11 @@
 				}
 
 			// FORMULARIO DE CONTACTO
-				var formatoNombres = /^[a-zA-Z\s]+$/;
+
+				// Variables con el formato que deben cumplir los campos de nombre, apellido y correo electrónico
+				var formatoNombres = /^[a-zA-Z\u00C0-\u017F\s']+$/;
 				var formatoCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-				$("#btnEnviar").click(function() {
-					
-					let nombre = $("#inputNombre").val();
-					let apellido = $("#inputApellido").val();
-					let correo = $("#inputEmail").val();
-					let mensaje = $("#inputMensaje").val();
-					console.log(nombre + ' ' + apellido);
-					console.log(correo);
-
-					if (nombre.trim() == '' || !formatoNombres.test(nombre)) {
-						console.log ("nombre invalido");
-						}
-
-					if (apellido.trim() == '' || !formatoNombres.test(apellido)) {
-						console.log ("apellido invalido");
-						}
-
-					if (correo.trim() == '' || !formatoCorreo.test(correo)) {
-						console.log ("correo invalido");
-						}
-				
-					if (mensaje.trim() == '') {
-						console.log ("mensaje invalido");
-					}
-
-				});
-			
 				// Función que despliega un alert informando que el mensaje en el formulario de contacto se ha enviado (sin validación)
 				function mostrarConfirmaciónContacto() {
 					window.alert('Mensaje enviado. ¡Gracias por contactarte con nosotros!');
@@ -589,8 +569,126 @@
 					limpiar(document.getElementById('formContacto'), document.getElementById('seccionContacto'));
 				}
 
-				// Event Listener que impide al usuario ingresar caracteres no númericos o más de 9 dígitos en el campo de número de celular
-				document.getElementById('inputTelefono').addEventListener('input', function() {
+				// Validación que se debe realizar cuando el usuario hace click en "Enviar"
+				$("#btnEnviar").click(function() {
+					
+					// variables con los valores de los input del usuario
+					let nombre = $("#inputNombre").val();
+					let apellido = $("#inputApellido").val();
+					let correo = $("#inputEmail").val();
+					let telefono = $("#inputTelefono").val();
+					let mensaje = $("#inputMensaje").val();
+
+					// variable booleana para verificar si el envío del formularo es valido - se inicia en true, y cambia a false en caso de que un campo no cumpla con los requisitos
+					let formularioValido = true;
+
+					// prints de testeo
+					console.log(nombre + ' ' + apellido);
+					console.log(correo);
+					console.log(telefono);
+					console.log(mensaje);
+
+					if (nombre.trim() == '') { // caso - campo obligatorio vacío
+						$("#inputNombre").addClass("is-invalid");
+						$("#nombreError").text("El nombre es requerido.").show();
+						formularioValido = false;
+					} else if (!formatoNombres.test(nombre)) { // caso - usuario puso números y/o caracteres especiales
+						$("#inputNombre").addClass("is-invalid");
+						$("#nombreError").text("Por favor ingrese un nombre válido.").show();
+						formularioValido = false;
+					}
+
+					if (apellido.trim() == '') { // caso - campo obligatorio vacío
+						$("#inputApellido").addClass("is-invalid"); 
+						$("#apellidoError").text("El apellido es requerido.").show();
+						formularioValido = false;
+					} else if (!formatoNombres.test(apellido)) { // caso - usuario puso números y/o caracteres especiales
+						$("#inputApellido").addClass("is-invalid");
+						$("#apellidoError").text("Por favor ingrese un apellido válido.").show();
+						formularioValido = false;
+					}
+
+					if (correo.trim() == '') { // caso - campo obligatorio vacío
+						$("#inputEmail").addClass("is-invalid");
+						$("#emailError").text("El correo electrónico es requerido.").show();
+						formularioValido = false;
+					} else if (!formatoCorreo.test(correo)) { // caso - no se cumple con el formato de correo electrónico
+						$("#inputEmail").addClass("is-invalid");
+						$("#emailError").text("Por favor ingrese una dirección de correo electrónico válida.").show();
+						formularioValido = false;
+					}
+
+					if (telefono.trim() !== '' && telefono < 900000000) { // no es obligatorio - se verifica que lo que se ingrese sea de 9 dígitos y que empiece con 9
+						$("#inputTelefono").addClass("is-invalid");
+						formularioValido = false;
+					}
+				
+					if (mensaje.trim() == '') { // caso - campo obligatorio vacío
+						$("#inputMensaje").addClass("is-invalid");
+						formularioValido = false;
+					}
+
+					// Si todos los input fueron validados, entonces depliega un mensaje confirmando envío y limpia el formulario
+					if (formularioValido) {
+						mostrarConfirmaciónContacto();
+						console.log("envío exitoso");
+					}
+				});
+
+
+				// Validaciones en tiempo real, previas al envío, con avisos al usuario de que no está completando el formulario correctamente
+
+				// Nombre y Apellido - mientras el usuario teclea, verifica que no esté ingresando caracteres no permitidos
+				// Los campos no debe estar marcado como inválidos mientras esten vacíos o se esté ingresando texto correctamente
+				$("#inputNombre").on("input", function() {
+					let nombre = $(this).val();
+					if (nombre.trim() !== '' && !formatoNombres.test(nombre)) {
+						$("#inputNombre").addClass("is-invalid");
+						$("#nombreError").text("Por favor ingrese un nombre válido.").show();
+					} else {
+						$("#inputNombre").removeClass("is-invalid");
+						$("#nombreError").hide();
+					}
+				});
+
+				$("#inputApellido").on("input", function() {
+					let apellido = $(this).val();
+					if (apellido.trim() !== '' && !formatoNombres.test(apellido)) {
+						$("#inputApellido").addClass("is-invalid");
+						$("#apellidoError").text("Por favor ingrese un nombre válido.").show();
+					} else {
+						$("#inputApellido").removeClass("is-invalid");
+						$("#apellidoError").hide();
+					}
+				});
+
+
+				// Correo Electrónico 
+				// focusout para que, en caso de que el correo tenga un formato invalido, se le de aviso al usuario apenas pase a otros campos
+				$("#inputEmail").focusout(function() {
+					let correo = $(this).val();
+					if (correo.trim() !== '' && !formatoCorreo.test(correo)) {
+						$("#inputEmail").addClass("is-invalid");
+						$("#emailError").text("Por favor ingrese una dirección de correo electrónico válida.").show();
+					} else {
+						$("#inputEmail").removeClass("is-invalid");
+						$("#emailError").hide();
+					}
+				});
+
+				// focus para que, en caso de haberse marcado en rojo previamente, el campo vuelva a su estado original apenas se haga click sobre él
+				$("#inputEmail").focus(function() {
+					let correo = $(this).val();
+					
+					$("#inputEmail").removeClass("is-invalid");
+					$("#emailError").hide();
+					
+				});
+
+
+				// Teléfono
+				// Mediante el manejo del input se le impide al usuario ingresar caracteres no númericos o más de 9 dígitos
+				$("#inputTelefono").on('input', function() {
 					let maxLength = 9; // Define la longitud máxima permitida
 
 					this.value = this.value.replace(/\D/g, ''); // Eliminada inmediatamente cualquier caracter no numérico
@@ -598,6 +696,34 @@
 					if (this.value.length > maxLength) {
 						this.value = this.value.slice(0, maxLength); // Limita la longitud del valor al máximo permitido
 					}
+				});
+
+
+				// Al no ser un campo obligatorio, solo se verifica que, de ingresarse un valor, este sea de 9 digitos y que empiece con 9 - si no se cumple, se da aviso apenas pasa a otro campo
+				$("#inputTelefono").focusout(function() {
+					let telefono = $(this).val();
+
+					if (telefono.trim() !== '' && telefono < 900000000) {
+						$("#inputTelefono").addClass("is-invalid");
+					} else {
+						$("#inputTelefono").removeClass("is-invalid");
+					}
+					
+				});
+
+				// focus para que, en caso de haberse marcado en rojo previamente, el campo vuelva a su estado original apenas se haga click sobre él
+				$("#inputTelefono").focus(function() {
+					
+					$("#inputTelefono").removeClass("is-invalid");
+					
+				});
+
+
+				// Mensaje - focus para que, en caso de haberse marcado en rojo previamente, el campo vuelva a su estado original apenas se haga click sobre él
+				$("#inputMensaje").focus(function() {
+					
+					$("#inputMensaje").removeClass("is-invalid");
+					
 				});
 
 
@@ -617,9 +743,9 @@
 				// Función para eliminar botones, vaciando html de sus columnas - A ejecutarse en cambios de artículos
 				function limpiarBotones() {
 					botones.forEach((boton) => {
-						boton.innerHTML = '';
-						console.log("botones eliminados");
+						boton.innerHTML = '';					
 					});
+					console.log("botones eliminados");
 				}
 
 			// GENERACIÓN DE DISCOS
@@ -710,6 +836,8 @@
 
 				// Función para agregar 4 discos seleccionados de forma aleatoria con portada, título, año y género a sus cards respectivas
 				function generarDiscos() {		
+
+					console.log("generarDiscos()");
 					
 					// Se generan copias de los arrays, para que puedan mutarse en las iteraciones
 					let discosCopia = discos.slice();
@@ -741,17 +869,12 @@
 				function limpiarCardsDiscos() {
 					cardsDiscos.forEach((card) => {
 						card.innerHTML = "";
-						console.log("cards de discos vaciados");
 					})
+					console.log("cards de discos vaciados");
 				};
 
 				// Al cargar inicialmente la página, que se ejecute la función por primera vez
 				generarDiscos();
-
-				// Si visitas el artículo de discos nuevamente tras haber cambiado de artículo, que se generen discos aleatorios nuevamente
-				document.getElementById('enlaceDiscos').addEventListener('click', function() {
-					generarDiscos();
-				});
 
 			// LIMPIEZA DE ELEMENTOS EN CAMBIOS DE ARTÍCULO
 
@@ -764,7 +887,12 @@
 						limpiar(document.getElementById('formCalculadora'), document.getElementById('seccionCalculadora'));
 						limpiar(document.getElementById('formTablas'), document.getElementById('seccionTablas'));
 						limpiarBotones();
-						limpiarCardsDiscos();													
+							
+						if (enlace.id === 'enlaceDiscos') {
+							generarDiscos();
+						} else {
+							limpiarCardsDiscos();
+						}
 					})
 				});
 
