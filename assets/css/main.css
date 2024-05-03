@@ -2227,7 +2227,7 @@ h2 {
 	font-size: 25px;
 }
 
-#calculadora, #tabla, #botones, #discos p {
+#calculadora, #tabla, #botones, #discos, #comidas p {
 	text-align: center;
 }
 
@@ -2274,13 +2274,13 @@ table {
 }
 
 th, td {
-	border: 1px solid black; /* Agregar bordes */
-	padding: 1vh; /* Espacio interno */
-	text-align: center; /* Centrar el contenido */
+	border: 1px solid black; 
+	padding: 1vh; 
+	text-align: center; 
 }
 
 th {
-	font-weight: bold; /* Hacer los encabezados en negrita */
+	font-weight: bold; 
 	text-align: center !important;
 	background-color: rgb(247, 212, 212);
 }
@@ -2325,4 +2325,37 @@ td {
 
 .invalid-feedback {
     color: #dc3546bd !important;
+}
+
+.card.comida {
+	margin-bottom: 5%; 
+	border: 2px solid black; 
+}
+
+.card.comida p {
+	line-height: 1;
+	font-weight:600;
+	text-align: justify;
+}
+
+.card.comida img {
+	border-bottom: 2px solid black;
+}
+
+#btnListarCategorias {
+	margin-top: 5%;
+	background-color: black;
+	font-size: 27px;
+	margin-bottom: 10%
+}
+
+/* Estilos para pantallas pequeñas */
+@media (max-width: 550px) {
+    #nav a {
+		font-size: 1.5rem !important;
+	}
+
+	#main {
+		margin-top: -27px;
+	}
 }

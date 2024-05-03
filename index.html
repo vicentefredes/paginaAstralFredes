@@ -13,8 +13,7 @@
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
-
+        
 	</head>
 	<body class="is-preload">
 
@@ -28,6 +27,7 @@
 						<a href="#tabla" class="icon solid fa-table"><span>Tablas</span></a>
 						<a href="#botones" class="icon solid fa-circle"><span>Botones</span></a>
 						<a href="#discos" class="icon solid fa-record-vinyl" id="enlaceDiscos"><span>Discos</span></a>
+						<a href="#comidas" class="icon solid fa-hotdog"><span>Comidas</span></a>
 						<a href="#contact" class="icon solid fa-envelope"><span>Contacto</span></a>
 						<a href="https://twitter.com/numetal_moment" class="icon brands fa-twitter"><span>Twitter</span></a>
 					</nav>
@@ -216,6 +216,24 @@
 								</section>
 							</article>
 
+						<!-- Discos -->
+							<article id="comidas" class="panel">
+								<header>
+									<h2>Categorías de Comida</h2>
+								</header>
+								<p>
+									Aquí puedes ver fotos y descripciones de las diferentes categorías, traídas desde un API, ¡con solamente un click!
+								</p>
+								<section id="seccionComidas">
+									<div class="row justify-content-center">
+										<div class="col-md-6 text-center">
+											<button type="button" class="btn btn-secondary" id="btnListarCategorias">Ver Categorías</button>
+										</div>
+									</div>	
+									<div class="row" id = "categoriasComida"></div>									
+								</section>
+							</article>						
+
 						<!-- Contact -->
 							<article id="contact" class="panel">
 								<header>
@@ -275,6 +293,7 @@
 
 		<!-- Scripts -->
 			<script src="assets/js/jquery.min.js"></script>
+			<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
 			<script src="assets/js/browser.min.js"></script>
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
@@ -875,6 +894,63 @@
 				// Al cargar inicialmente la página, que se ejecute la función por primera vez
 				generarDiscos();
 
+			// CATEGORÍAS DE COMIDAS
+
+				// Método que trae información de las categorías de comida desde API y las pone en cards
+				$("#btnListarCategorias").click(function() {
+					$.get("https://www.themealdb.com/api/json/v1/1/categories.php", function(data) { // Se obtiene la API
+						$.each(data.categories, function(i, item) { // Se itera por cada objeto del archivo
+							$("#categoriasComida").append( // Agregamos cards
+								`<div class="col-md-4">
+										<div class="card comida">
+											<img class="card-img-top" src="${item.strCategoryThumb}">
+											<div class="card-body">
+												<h5 class="card-title">${item.idCategory}. ${item.strCategory}</h5>
+												<br>
+												<p>${item.strCategoryDescription}</p>
+											</div>
+										</div>
+								</div>` 
+							);
+							$("#categoriasComida").show();
+						});
+
+						ajustarParrafosComida(); // Debido a la variable longitud de las descripciones, llamamos a una función que ajuste los tamaños de fuente
+					});
+				});
+		
+				function ajustarParrafosComida() {
+					// Selecciona todos los elementos <p> dentro de las cards con la clase .comida
+					let parrafos = document.querySelectorAll('.card.comida p');
+
+					// Itera sobre cada elemento <p> seleccionado
+					parrafos.forEach(function(parrafo) {
+						// Obtiene el número de palabras en el párrafo
+						let numeroPalabras = parrafo.textContent.split(' ').length;
+
+						// Ajusta el tamaño de fuente del párrafo según el número de palabras
+						if (numeroPalabras <= 10) {
+							parrafo.style.fontSize = '27px';
+						} else if (numeroPalabras <= 30) {
+							parrafo.style.fontSize = '22px';
+						} else if (numeroPalabras <= 60) {
+							parrafo.style.fontSize = '18px';
+						} else if (numeroPalabras <= 80) {
+							parrafo.style.fontSize = '17px';
+						} else if (numeroPalabras <= 100) {
+							parrafo.style.fontSize = '15px';
+						} else if (numeroPalabras <= 125) {
+							parrafo.style.fontSize = '13px';
+						} else {
+							parrafo.style.fontSize = '12px';
+						}
+
+						console.log(numeroPalabras);
+						console.log(parrafo.style.fontSize);
+					});
+				}
+				
+
 			// LIMPIEZA DE ELEMENTOS EN CAMBIOS DE ARTÍCULO
 
 				// Variable que contiene un array con todos los elementos a (enlaces) de la barra de navegación de la página
@@ -886,6 +962,7 @@
 						limpiar(document.getElementById('formCalculadora'), document.getElementById('seccionCalculadora'));
 						limpiar(document.getElementById('formTablas'), document.getElementById('seccionTablas'));
 						limpiarBotones();
+						$("#categoriasComida").hide(); // Forma más simple y efectiva con JQuery - utilizar de aquí en adelante
 							
 						if (enlace.id === 'enlaceDiscos') {
 							generarDiscos();
