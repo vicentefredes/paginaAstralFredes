@@ -28,6 +28,7 @@
 						<a href="#botones" class="icon solid fa-circle"><span>Botones</span></a>
 						<a href="#discos" class="icon solid fa-record-vinyl" id="enlaceDiscos"><span>Discos</span></a>
 						<a href="#comidas" class="icon solid fa-hotdog"><span>Comidas</span></a>
+						<a href="#peliculas" class="icon solid fa-film"><span>Peliculas</span></a>
 						<a href="#contact" class="icon solid fa-envelope"><span>Contacto</span></a>
 						<a href="https://twitter.com/numetal_moment" class="icon brands fa-twitter"><span>Twitter</span></a>
 					</nav>
@@ -216,7 +217,7 @@
 								</section>
 							</article>
 
-						<!-- Discos -->
+						<!-- Comidas -->
 							<article id="comidas" class="panel">
 								<header>
 									<h2>Categorías de Comida</h2>
@@ -232,7 +233,20 @@
 									</div>	
 									<div class="row" id = "categoriasComida"></div>									
 								</section>
-							</article>						
+							</article>	
+							
+						<!-- Películas -->
+							<article id="peliculas" class="panel">
+								<header>
+									<h2>Top 50 Películas</h2>
+								</header>
+								<p>
+									¡Las 50 películas con mejores puntuaciones en IMDB!
+								</p>
+								<section id="seccionPeliculas">
+									<div class="row justify-content-center" id = "topPeliculas"></div>									
+								</section>
+							</article>	
 
 						<!-- Contact -->
 							<article id="contact" class="panel">
@@ -949,7 +963,44 @@
 						console.log(parrafo.style.fontSize);
 					});
 				}
-				
+			
+			// PELÍCULAS
+				const settings = {
+						async: true,
+						crossDomain: true,
+						url: 'https://imdb-top-100-movies.p.rapidapi.com/',
+						method: 'GET',
+						headers: {
+							'X-RapidAPI-Key': 'f44e172a9fmsh31e85555c42b292p12cfb7jsn48c54f6764ae',
+							'X-RapidAPI-Host': 'imdb-top-100-movies.p.rapidapi.com'
+						}
+					};
+
+					$.ajax(settings).done(function (response) {
+						console.log(response);
+
+						var top50 = response.slice(0, 50);
+
+						$.each(top50, function(i, item) {
+							$("#topPeliculas").append( // Agregamos cards
+								`<div class="col-md-4">
+									<div class="card pelicula">
+										<img class="card-img-top" src="${item.image}">
+										<div class="card-body">
+											<h5 class="card-title">${item.rank}. ${item.title}</h5>
+											<p style="text-align:center;">${item.year}</p>			
+											<p style="text-align:center;">${item.rating}</p>						
+											<br>
+											<p>${item.description}</p>
+										</div>
+									</div>
+								</div>` 
+							);
+						
+						});
+						
+					});	
+			
 
 			// LIMPIEZA DE ELEMENTOS EN CAMBIOS DE ARTÍCULO
 

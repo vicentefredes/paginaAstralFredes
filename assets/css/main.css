@@ -2327,18 +2327,18 @@ td {
     color: #dc3546bd !important;
 }
 
-.card.comida {
+.card.comida, .card.pelicula {
 	margin-bottom: 5%; 
 	border: 2px solid black; 
 }
 
-.card.comida p {
+.card.comida p, .card.pelicula p {
 	line-height: 1;
 	font-weight:600;
 	text-align: justify;
 }
 
-.card.comida img {
+.card.comida img, .card.pelicula img {
 	border-bottom: 2px solid black;
 }
 
@@ -2350,12 +2350,22 @@ td {
 }
 
 /* Estilos para pantallas pequeñas */
-@media (max-width: 550px) {
-    #nav a {
-		font-size: 1.5rem !important;
+@media (max-width: 610px) {
+	#nav a {
+		font-size: 2rem !important;
 	}
 
 	#main {
-		margin-top: -27px;
+		margin-top: -15px;
+	}
+}
+
+@media (max-width: 500px) {
+    #nav a {
+		font-size: 1.3rem !important;
+	}
+
+	#main {
+		margin-top: -35px;
 	}
 }
